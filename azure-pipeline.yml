@@ -1,0 +1,115 @@
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    exclude:
+    - README.md
+    - .gitignore
+
+pr:
+  branches:
+    include:
+    - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  dotNetVersion: '8.0.x'
+  azureSubscription: 'azure-service-connection'
+  azdEnvironmentName: 'warhammersim-$(Build.SourceBranchName)'
+
+stages:
+- stage: Build
+  displayName: 'Build and Test'
+  jobs:
+  - job: Build
+    displayName: 'Build Job'
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET SDK $(dotNetVersion)'
+      inputs:
+        version: '$(dotNetVersion)'
+        includePreviewVersions: true
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore packages'
+      inputs:
+        command: 'restore'
+        projects: '**/*.csproj'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build solution'
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+        arguments: '--configuration Release --no-restore'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Run tests'
+      inputs:
+        command: 'test'
+        projects: '**/*Tests.csproj'
+        arguments: '--configuration Release --no-build --verbosity normal'
+      continueOnError: true
+
+    # Install Azure Developer CLI
+    - script: |
+        curl -fsSL https://aka.ms/install-azd.sh | bash
+        echo "##vso[task.prependpath]/home/vsts/.azd/bin"
+      displayName: 'Install Azure Developer CLI'
+
+    # Package application (only on main branch)
+    - script: |
+        azd package --output-path $(Build.ArtifactStagingDirectory)
+      displayName: 'Package application with azd'
+      condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+      env:
+        AZURE_ENV_NAME: $(azdEnvironmentName)
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish artifacts'
+      condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'azd-package'
+
+- stage: DeployDev
+  displayName: 'Deploy to Development'
+  dependsOn: Build
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  jobs:
+  - deployment: DeployToDev
+    displayName: 'Deploy to Azure with azd'
+    environment: 'development'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: azd-package
+
+          # Install Azure Developer CLI
+          - script: |
+              curl -fsSL https://aka.ms/install-azd.sh | bash
+              echo "##vso[task.prependpath]/home/vsts/.azd/bin"
+            displayName: 'Install Azure Developer CLI'
+
+          # Deploy with azd
+          - task: AzureCLI@2
+            displayName: 'Deploy with azd'
+            inputs:
+              azureSubscription: '$(azureSubscription)'
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                # Set up azd environment
+                azd env set AZURE_SUBSCRIPTION_ID $AZURE_SUBSCRIPTION_ID
+                azd env set AZURE_LOCATION eastus2
+                
+                # Deploy the application
+                azd deploy --no-prompt
+              workingDirectory: '$(Pipeline.Workspace)/azd-package'
+            env:
+              AZURE_ENV_NAME: 'warhammersim-dev'
