@@ -1,0 +1,48 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35617.110 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerSim.AppHost", "WarhammerSim.AppHost\WarhammerSim.AppHost.csproj", "{6EBEF129-916C-466D-9206-47DFCDEBD44E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerSim.ServiceDefaults", "WarhammerSim.ServiceDefaults\WarhammerSim.ServiceDefaults.csproj", "{3F7A5D3E-4572-369B-881C-16F4657560D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerSim.ApiService", "WarhammerSim.ApiService\WarhammerSim.ApiService.csproj", "{025FD5BB-2A68-91D6-C3EC-BF0F486A6547}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerSim.Web", "WarhammerSim.Web\WarhammerSim.Web.csproj", "{9F2C8F67-6D1D-E265-EAC6-A62F2FEED671}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarhammerSim.Tests", "WarhammerSim.Tests\WarhammerSim.Tests.csproj", "{06DC3D46-F4D7-E3D4-89EC-C2BD8BBD952C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6EBEF129-916C-466D-9206-47DFCDEBD44E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EBEF129-916C-466D-9206-47DFCDEBD44E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EBEF129-916C-466D-9206-47DFCDEBD44E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EBEF129-916C-466D-9206-47DFCDEBD44E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F7A5D3E-4572-369B-881C-16F4657560D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F7A5D3E-4572-369B-881C-16F4657560D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F7A5D3E-4572-369B-881C-16F4657560D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F7A5D3E-4572-369B-881C-16F4657560D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{025FD5BB-2A68-91D6-C3EC-BF0F486A6547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{025FD5BB-2A68-91D6-C3EC-BF0F486A6547}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{025FD5BB-2A68-91D6-C3EC-BF0F486A6547}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{025FD5BB-2A68-91D6-C3EC-BF0F486A6547}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F2C8F67-6D1D-E265-EAC6-A62F2FEED671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F2C8F67-6D1D-E265-EAC6-A62F2FEED671}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F2C8F67-6D1D-E265-EAC6-A62F2FEED671}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F2C8F67-6D1D-E265-EAC6-A62F2FEED671}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06DC3D46-F4D7-E3D4-89EC-C2BD8BBD952C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06DC3D46-F4D7-E3D4-89EC-C2BD8BBD952C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06DC3D46-F4D7-E3D4-89EC-C2BD8BBD952C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06DC3D46-F4D7-E3D4-89EC-C2BD8BBD952C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A092BEC-D80E-46D4-9034-CF03BBF26BE9}
+	EndGlobalSection
+EndGlobal
